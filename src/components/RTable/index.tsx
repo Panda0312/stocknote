@@ -1,82 +1,35 @@
-import { useEffect, useMemo, useState } from 'react'
-// import { useAppSelector } from '../../store/hooks'
+import styled from 'styled-components'
+import { useEffect, useMemo } from 'react'
 import {
-  useTable, useExpanded,
-  useResizeColumns, CellProps, useSortBy, useBlockLayout
+  Column,
+  // useBlockLayout,
+  useFlexLayout,
+  useResizeColumns,
+  useSortBy,
+  useTable
 } from 'react-table'
-import type { Column } from 'react-table'
-import { StickyStyles } from '../Styled'
-import { useSticky } from 'react-table-sticky'
-import { Adiv } from '../Tool/Adiv'
-
-type TColData = {
-  col1: string | JSX.Element,
-  col2: string,
-  col3: string,
-  subRows?: Array<TColData>
-}
-
-const initData: TColData[] = [
-  {
-    col1: '001', col2: 'react1', col3: 'redux1', subRows: [
-      {
-        col1: 'sub-001', col2: 'sub-react1', col3: 'sub-redux1', subRows: [
-          { col1: 'sub2-001', col2: 'sub2-react1', col3: 'sub2-redux1' }
-        ]
-      }
-    ]
-  },
-  { col1: '002', col2: 'react2---', col3: 'redux2', subRows: [] },
-  { col1: '003', col2: 'react3-', col3: 'redux3', subRows: [] },
-  { col1: '004', col2: 'react4--', col3: 'redux4', subRows: [] },
-  { col1: '005', col2: 'react5---', col3: 'redux5', subRows: [] },
-  { col1: '006', col2: 'react6-', col3: 'redux6' }
-]
-
-type StickyColumn = Column & {
-  sticky?: string;
-}
-
-const initColumn: StickyColumn[] = [
-  {
-    sticky: 'left',
-    Header: '', id: 'expander',
-    Cell: ({ row }: CellProps<TColData>) => (
-      <button onClick={() => { console.log(row) }}>Test</button>
-    )
-  }
-  ,
-  { id: 'col1', Header: 'Column 1', accessor: 'col1', minWidth: 150 },
-  { id: 'col2', Header: 'Column 2', accessor: 'col2', minWidth: 165 },
-  { Header: 'Column 3', accessor: 'col3', sticky: 'right', minWidth: 200 }
-]
 
 const RTable = () => {
-  const [data, setData] = useState<TColData[]>(initData)
-  const count = 1 //useAppSelector(state => state.counter.value)
-  const memoData = useMemo(() => {
-    const customCellRow = { ...data[0], col3: 'redux' + count }
-    return [customCellRow, ...data.slice(1)]
-  }, [data, count])
+  const data = useMemo(() => [
+    { col1: '001', col2: 'react1', col3: 'react1' },
+    { col1: '002', col2: 'react2', col3: 'react2' },
+    { col1: '003', col2: 'react3', col3: 'react3' },
+    { col1: '004', col2: 'react4', col3: 'react4' },
+    { col1: '005', col2: 'react5', col3: 'react5' },
+    { col1: '006', col2: 'react6', col3: 'react6' }
+  ], [])
 
-  const columns = useMemo(() => initColumn, [])
+  const columns = useMemo<Column<{ col1: string, col2: string, col3: string }>[]>(() => [
+    { Header: 'Column 1', accessor: 'col1' },
+    { Header: 'Column 2', accessor: 'col2' },
+    { Header: 'Column 3', accessor: 'col3' }
+  ], [])
 
   const tableIns = useTable(
-<<<<<<< HEAD
-    {
-      data: memoData, columns, initialState: {
-        hiddenColumns: []
-      },
-      manualSortBy: true
-    },
-    useSortBy,
-=======
     { columns, data },
->>>>>>> 8783c80 (merge)
+    useSortBy,
     useResizeColumns,
-    useExpanded,
-    useBlockLayout,
-    useSticky
+    useFlexLayout,
   )
 
   const {
@@ -96,65 +49,21 @@ const RTable = () => {
   }, [state])
 
   return (
-<<<<<<< HEAD
     <div>
-      <div>
-        <button onClick={() => setData(prev => [...prev].sort((a, b) => a['col2'].length - b['col2'].length))}>Change Data</button>
-      </div>
-      <StickyStyles>
-        <div {...getTableProps()} className="table sticky" style={{ width: '100%', height: '100%' }}>
-          <div className="header">
-            {headerGroups.map((headerGroup) => (
-              <Adiv {...headerGroup.getHeaderGroupProps()} className="tr">
-                {headerGroup.headers.map((column) => (
-                  <Adiv {...column.getHeaderProps(column.getSortByToggleProps())} config={column} className="th">
-                    {column.render('Header')}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? 'V'
-                          : '^'
-                        : ''}
-                    </span>
-                    {
-                      <div
-                        {...column.getResizerProps()}
-                        className={`resizer ${column.isResizing ? 'isResizing' : ''
-                          }`
-                        }
-                      />
-                    }
-                  </Adiv>
-                ))}
-              </Adiv>
-            ))}
-          </div>
-          <div {...getTableBodyProps()} className="body">
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <div {...row.getRowProps()} className="tr">
-                  {row.cells.map((cell) => (
-                    <div {...cell.getCellProps()} className="td">
-                      {cell.render('Cell')}
-                    </div>
-                  ))}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </StickyStyles>
-    </div>
-=======
-    <StickyStyles>
-      <div {...getTableProps()} className="table sticky" style={{ width: 500, height: 200 }}>
+      <div {...getTableProps()} className="table sticky" style={{ width: '100%', height: '100%' }}>
         <div className="header">
           {headerGroups.map((headerGroup) => (
             <div {...headerGroup.getHeaderGroupProps()} className="tr">
               {headerGroup.headers.map((column) => (
-                <div {...column.getHeaderProps()} className="th">
+                <div {...column.getHeaderProps(column.getSortByToggleProps())} className="th">
                   {column.render('Header')}
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? 'V'
+                        : '^'
+                      : ''}
+                  </span>
                   {
                     <div
                       {...column.getResizerProps()}
@@ -183,8 +92,7 @@ const RTable = () => {
           })}
         </div>
       </div>
-    </StickyStyles>
->>>>>>> 8783c80 (merge)
+    </div >
   )
 }
 
