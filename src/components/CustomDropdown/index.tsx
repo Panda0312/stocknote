@@ -56,8 +56,11 @@ export const StyledDropdown = styled(CustomDropdown)`
     height: 80px;
     width: 400px;
   }
+<<<<<<< HEAD
   [class$="-menu"] {
     max-height: 200px;
     overflow: auto;
   }
+=======
+>>>>>>> 8783c80 (merge)
 `

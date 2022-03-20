@@ -62,6 +62,7 @@ const RTable = () => {
   const columns = useMemo(() => initColumn, [])
 
   const tableIns = useTable(
+<<<<<<< HEAD
     {
       data: memoData, columns, initialState: {
         hiddenColumns: []
@@ -69,6 +70,9 @@ const RTable = () => {
       manualSortBy: true
     },
     useSortBy,
+=======
+    { columns, data },
+>>>>>>> 8783c80 (merge)
     useResizeColumns,
     useExpanded,
     useBlockLayout,
@@ -92,6 +96,7 @@ const RTable = () => {
   }, [state])
 
   return (
+<<<<<<< HEAD
     <div>
       <div>
         <button onClick={() => setData(prev => [...prev].sort((a, b) => a['col2'].length - b['col2'].length))}>Change Data</button>
@@ -141,6 +146,45 @@ const RTable = () => {
         </div>
       </StickyStyles>
     </div>
+=======
+    <StickyStyles>
+      <div {...getTableProps()} className="table sticky" style={{ width: 500, height: 200 }}>
+        <div className="header">
+          {headerGroups.map((headerGroup) => (
+            <div {...headerGroup.getHeaderGroupProps()} className="tr">
+              {headerGroup.headers.map((column) => (
+                <div {...column.getHeaderProps()} className="th">
+                  {column.render('Header')}
+                  {
+                    <div
+                      {...column.getResizerProps()}
+                      className={`resizer ${column.isResizing ? 'isResizing' : ''
+                        }`
+                      }
+                    />
+                  }
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div {...getTableBodyProps()} className="body">
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <div {...row.getRowProps()} className="tr">
+                {row.cells.map((cell) => (
+                  <div {...cell.getCellProps()} className="td">
+                    {cell.render('Cell')}
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </StickyStyles>
+>>>>>>> 8783c80 (merge)
   )
 }
 
