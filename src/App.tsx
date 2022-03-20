@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { StyledDropdown } from './components/CustomDropdown';
 import { Counter } from './components/Counter';
 import RTable from './components/RTable';
-import StyledCounter from './components/styled/StyledCounter';
+import MBaseTable from './components/MBaseTable';
+
 import './App.css'
 
 function App () {

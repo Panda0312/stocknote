@@ -2,12 +2,15 @@ import styled from 'styled-components'
 import { useEffect, useMemo } from 'react'
 import {
   Column,
+  useBlockLayout,
+  useExpanded,
   // useBlockLayout,
   useFlexLayout,
   useResizeColumns,
   useSortBy,
   useTable
 } from 'react-table'
+import { useSticky } from 'react-table-sticky'
 
 const RTable = () => {
   const data = useMemo(() => [
@@ -27,9 +30,10 @@ const RTable = () => {
 
   const tableIns = useTable(
     { columns, data },
-    useSortBy,
     useResizeColumns,
-    useFlexLayout,
+    useExpanded,
+    useBlockLayout,
+    useSticky
   )
 
   const {
