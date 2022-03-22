@@ -10,7 +10,6 @@ function App () {
       <nav className="app-nav">
         <Link to={'/'}>Custom Dropdown</Link>|
         <Link to={'/react-table'}>React Table</Link>
-        <Link to={'/base-table'}>Base Table</Link>
       </nav>
       <Routes>
         <Route path="/" element={<StyledDropdown className='styled-dropdown' />} />
