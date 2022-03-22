@@ -8,7 +8,7 @@ type TColData = {
   col1: string | JSX.Element,
   col2: string,
   col3: string,
-  subRows?: Array<any>
+  subRows?: Array<TColData>
 }
 
 const initData = [
