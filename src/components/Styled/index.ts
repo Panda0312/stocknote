@@ -3,6 +3,23 @@ import styled from "styled-components"
 export const StickyStyles = styled.div`
 .table {
   border: 1px solid #ddd;
+  .resizer {
+    display: inline-block;
+    background: blue;
+    width: 10px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateX(50%);
+    z-index: 1;
+    ${'' /* prevents from scrolling while dragging on touch devices */}
+    touch-action:none;
+
+    &.isResizing {
+      background: red;
+    }
+  }
   .tr {
     :last-child {
       .td {

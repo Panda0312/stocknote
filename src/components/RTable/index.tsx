@@ -1,8 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useTable, useExpanded, useBlockLayout, useResizeColumns, CellProps, useSortBy } from 'react-table'
+import { useAppSelector } from '../../store/hooks'
+import {
+  useTable, useExpanded, useBlockLayout,
+  useResizeColumns, CellProps, useSortBy
+} from 'react-table'
 import type { Column } from 'react-table'
 import { StickyStyles } from '../Styled'
 import { useSticky } from 'react-table-sticky'
+import { Adiv } from '../Tool/Adiv'
 
 type TColData = {
   col1: string | JSX.Element,
@@ -57,7 +62,11 @@ const initColumn: StickyColumn[] = [
 
 const RTable = () => {
   const [data, setData] = useState(initData)
-  const memoData = useMemo(() => data, [data])
+  const count = useAppSelector(state => state.counter.value)
+  const memoData = useMemo(() => {
+    const customCellRow = { ...data[0], col3: 'redux' + count }
+    return [customCellRow, ...data.slice(1)]
+  }, [data, count])
 
   const columns = useMemo(() => initColumn, [])
 
@@ -101,11 +110,10 @@ const RTable = () => {
         <div {...getTableProps()} className="table sticky" style={{ width: 500, height: 200 }}>
           <div className="header">
             {headerGroups.map((headerGroup) => (
-              <div {...headerGroup.getHeaderGroupProps()} className="tr">
+              <Adiv {...headerGroup.getHeaderGroupProps()} className="tr">
                 {headerGroup.headers.map((column) => (
-                  <div {...column.getHeaderProps(column.getSortByToggleProps())} className="th">
+                  <Adiv {...column.getHeaderProps(column.getSortByToggleProps())} config={column} className="th">
                     {column.render('Header')}
-                    {column.isVisible}
                     <span>
                       {column.isSorted
                         ? column.isSortedDesc
@@ -121,9 +129,9 @@ const RTable = () => {
                         }
                       />
                     }
-                  </div>
+                  </Adiv>
                 ))}
-              </div>
+              </Adiv>
             ))}
           </div>
           <div {...getTableBodyProps()} className="body">

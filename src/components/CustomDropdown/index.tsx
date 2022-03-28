@@ -7,6 +7,11 @@ type TProps = {
 
 const CustomDropdown = ({ className }: TProps) => {
   const list: Array<any> = [
+    { icon: "🛠️", label: "Written in TypeScript", value: 'l1', prefix: 'test-prefix' },
+    { icon: "🛠️", label: "Written in TypeScript", value: 'l1', prefix: 'test-prefix' },
+    { icon: "🛠️", label: "Written in TypeScript", value: 'l1', prefix: 'test-prefix' },
+    { icon: "🛠️", label: "Written in TypeScript", value: 'l1', prefix: 'test-prefix' },
+    { icon: "🛠️", label: "Written in TypeScript", value: 'l1', prefix: 'test-prefix' },
     { icon: "🛠️", label: "Written in TypeScript", value: 'l1', prefix: 'test-prefix' }
   ]
   const optionFormatter = (data: any, formatOptionLabelMeta: any) => {
@@ -21,7 +26,26 @@ const CustomDropdown = ({ className }: TProps) => {
   return (
     <div className={className}>
       <h3>React Select</h3>
-      <Select options={list} formatOptionLabel={optionFormatter} />
+      <Select
+        className='my-select'
+        classNamePrefix={'prefix'}
+        styles={{}}
+        options={list}
+        formatOptionLabel={optionFormatter}
+      />
+      <hr />
+      <div className='testStyle'>
+        <div className="menu" style={{ width: 200, maxHeight: 300, border: '1px solid #ccc', overflow: 'auto' }}>
+          <div style={{ maxHeight: 800, padding: 6, backgroundColor: 'green', overflow: 'auto' }}>
+            <div style={{ height: 100, borderBottom: '1px solid #666' }}>a</div>
+            <div style={{ height: 100, borderBottom: '1px solid #666' }}>a</div>
+            <div style={{ height: 100, borderBottom: '1px solid #666' }}>a</div>
+            <div style={{ height: 100, borderBottom: '1px solid #666' }}>a</div>
+            <div style={{ height: 100, borderBottom: '1px solid #666' }}>a</div>
+            <div style={{ height: 100, borderBottom: '1px solid #666' }}>a</div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
@@ -31,5 +55,9 @@ export const StyledDropdown = styled(CustomDropdown)`
     min-height: unset;
     height: 80px;
     width: 400px;
+  }
+  [class$="-menu"] {
+    max-height: 200px;
+    overflow: auto;
   }
 `
