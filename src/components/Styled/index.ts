@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 export const StickyStyles = styled.div`
 .table {
+  box-sizing: border-box;
   border: 1px solid #ddd;
   .resizer {
     display: inline-block;
