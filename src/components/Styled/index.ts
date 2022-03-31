@@ -40,7 +40,7 @@ export const StickyStyles = styled.div`
     }
   }
   &.sticky {
-    overflow: scroll;
+    overflow: auto;
     .header,
     .footer {
       position: sticky;
