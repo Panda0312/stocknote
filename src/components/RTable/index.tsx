@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useAppSelector } from '../../store/hooks'
+// import { useAppSelector } from '../../store/hooks'
 import {
-  useTable, useExpanded, useBlockLayout,
-  useResizeColumns, CellProps, useSortBy
+  useTable, useExpanded,
+  useResizeColumns, CellProps, useSortBy, useBlockLayout
 } from 'react-table'
 import type { Column } from 'react-table'
 import { StickyStyles } from '../Styled'
@@ -16,7 +16,7 @@ type TColData = {
   subRows?: Array<TColData>
 }
 
-const initData = [
+const initData: TColData[] = [
   {
     col1: '001', col2: 'react1', col3: 'redux1', subRows: [
       {
@@ -41,28 +41,19 @@ const initColumn: StickyColumn[] = [
   {
     sticky: 'left',
     Header: '', id: 'expander',
-    Cell: ({ row }: CellProps<TColData>) => row.canExpand
-      ? (
-        <span
-          {...row.getToggleRowExpandedProps({
-            style: {
-              paddingLeft: `${row.depth * 2}rem`
-            }
-          })}
-        >
-          {row.isExpanded ? "v" : ">"}
-        </span>
-      ) : null
+    Cell: ({ row }: CellProps<TColData>) => (
+      <button onClick={() => { console.log(row) }}>Test</button>
+    )
   }
   ,
-  { id: 'col1', Header: 'Column 1', accessor: 'col1' },
-  { id: 'col2', Header: 'Column 2', accessor: 'col2' },
+  { id: 'col1', Header: 'Column 1', accessor: 'col1', minWidth: 150 },
+  { id: 'col2', Header: 'Column 2', accessor: 'col2', minWidth: 165 },
   { Header: 'Column 3', accessor: 'col3', sticky: 'right', minWidth: 200 }
 ]
 
 const RTable = () => {
-  const [data, setData] = useState(initData)
-  const count = useAppSelector(state => state.counter.value)
+  const [data, setData] = useState<TColData[]>(initData)
+  const count = 1 //useAppSelector(state => state.counter.value)
   const memoData = useMemo(() => {
     const customCellRow = { ...data[0], col3: 'redux' + count }
     return [customCellRow, ...data.slice(1)]
@@ -73,7 +64,7 @@ const RTable = () => {
   const tableIns = useTable(
     {
       data: memoData, columns, initialState: {
-        hiddenColumns: ['col1']
+        hiddenColumns: []
       },
       manualSortBy: true
     },
@@ -104,10 +95,9 @@ const RTable = () => {
     <div>
       <div>
         <button onClick={() => setData(prev => [...prev].sort((a, b) => a['col2'].length - b['col2'].length))}>Change Data</button>
-
       </div>
       <StickyStyles>
-        <div {...getTableProps()} className="table sticky" style={{ width: 500, height: 200 }}>
+        <div {...getTableProps()} className="table sticky" style={{ width: '100%', height: '100%' }}>
           <div className="header">
             {headerGroups.map((headerGroup) => (
               <Adiv {...headerGroup.getHeaderGroupProps()} className="tr">
