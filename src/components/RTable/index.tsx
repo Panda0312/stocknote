@@ -83,7 +83,6 @@ const RTable = () => {
     prepareRow,
     state
   } = tableIns
-
   useEffect(() => {
     console.log(state)
     return () => {
